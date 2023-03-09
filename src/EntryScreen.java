@@ -2,24 +2,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
+ * This program provides entry screens to accept persons, approvals and batches.
+ *
  * @author PGaynor
+ *
  */
 public class EntryScreen {
+
     /**
-     * This program provides entry screens to accept persons, approvals and batches.
-     *
-     * @param args
+     * This is the default constructor, which is the only one needed.
      */
     public EntryScreen() {
-        /**
-         * This is the default constructor, which is the only one needed.
-         */
+
     }
 
+    /**
+     * This method accepts information on a person
+     */
     public Person getPerson(Scanner scan) {
-        /**
-         * This method accepts information on a person
-         */
+
         Person p = null;
         scan.nextLine();//This clears the buffer of any previously waiting input
         try {
@@ -30,12 +31,8 @@ public class EntryScreen {
             System.out.println("Willing to publish?(1=yes,0=no):");
             int willpub = Integer.parseInt(scan.nextLine());
             boolean pub;
-            if (willpub == 0)
-                pub = false;
-            else
-                pub = true;
+            pub = willpub != 0;
             p = new Person(name, age, pub);
-            ;
         } catch (NumberFormatException nfe) {
             System.out.println("Invalid input");
         }
@@ -43,21 +40,38 @@ public class EntryScreen {
 
     }
 
+    /**
+     * This method accepts information on a batch of vaccines
+     */
     public VaccineBatch getVaccineBatch(Scanner scan) {
-        /**
-         * This method accepts information on a batch of vaccines
-         */
-        VaccineBatch vb = null;
-        //Complete code to accect vacci nebatch from screen
-        return vb;
 
+        scan.nextLine(); // Clear input buffer
+
+        try {
+            String name, contraIndicators;
+            int size, preference;
+
+            System.out.print("Enter size: ");
+            size = Integer.parseInt(scan.nextLine());
+            System.out.print("Enter name: ");
+            name = scan.nextLine();
+            System.out.print("Enter preference: ");
+            preference = Integer.parseInt(scan.nextLine());
+            System.out.print("Enter contra indicators (comma separated): ");
+            contraIndicators = scan.nextLine();
+
+            return new VaccineBatch(name, size, preference, contraIndicators);
+        } catch (NumberFormatException e) {
+            System.out.println("There was an error parsing an input to a number!");
+            return null;
+        }
     }
 
-
+    /**
+     * This method accepts approves a person
+     */
     public ApprovedPerson approvePerson(Scanner scan, VaxProgram vx) {
-        /**
-         * This method accepts approves a person
-         */
+
         ApprovedPerson ap = null;
         try {
             scan.nextLine();//This clears the buffer of any previously waiting input

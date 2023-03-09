@@ -81,9 +81,18 @@ public class VaxProgram {
     }
 
     public ArrayList<VaccineBatch> loadVCBatches(String vcfile) throws IOException, ArrayIndexOutOfBoundsException {
-        Scanner vscan = null;
-        ArrayList<VaccineBatch> vlist = new ArrayList<VaccineBatch>();
+        Scanner vscan = new Scanner(new FileInputStream(vcfile));
+        ArrayList<VaccineBatch> vlist = new ArrayList<>();
 
+        while (vscan.hasNext()) {
+            final var fileLine = vscan.nextLine().split("\\t");
+            vlist.add(new VaccineBatch(
+                    fileLine[0],
+                    Integer.parseInt(fileLine[1]),
+                    Integer.parseInt(fileLine[3]),
+                    fileLine[4]
+            ));
+        }
 
         return vlist;
 

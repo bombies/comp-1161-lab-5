@@ -18,7 +18,7 @@ public class VaccineBatch {
         this.preference = preference;
         this.name = name;
         Scanner stringScan = new Scanner(contraIndicators);
-        contras = new ArrayList<String>();
+        contras = new ArrayList<>();
         stringScan.useDelimiter(",");
         while (stringScan.hasNext())
             contras.add(stringScan.next());
@@ -50,6 +50,11 @@ public class VaccineBatch {
 
         }
         return returnval;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s\t%d\t%d\t%d\t%s", getName(), getSize(), getBalance(), getPreference(), getContras());
     }
 
     public static String getVBHeader() {
