@@ -1,0 +1,10 @@
+RastaZeneca	1	0	95	Asthma
+AstraZeneca	2	0	90	Allergies
+4	John Silver	72	false
+6	Ginger Garden	27	true
+0	Sprat, Jack		[Asthma,, Diabetes]
+3	Hill, Jill		[Allergies]
+7	Contrary, Mary		[Allergies]
+2	Beard, Black		AstraZeneca
+1*	River, Angel		AstraZeneca
+5*	Tom, Jerry		RastaZeneca

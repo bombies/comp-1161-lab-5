@@ -1,0 +1,8 @@
+0	Jack Sprat	87	true
+1	Angel River	74	true
+2	Black Beard	59	false
+3	Jill Hill	59	true
+4	John Silver	72	false
+5	Jerry Tom	32	true
+6	Ginger Garden	27	true
+7	Mary Contrary	52	false

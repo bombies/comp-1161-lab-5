@@ -1,0 +1,6 @@
+0 Asthma, Diabetes
+1
+2
+3 Allergies
+5 Allergies
+7 Allergies

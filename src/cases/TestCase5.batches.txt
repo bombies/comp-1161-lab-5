@@ -1,0 +1,3 @@
+RastaZeneca 1 95 Asthma
+AstraZeneca 2 90 Allergies
+Johnson 20 85
