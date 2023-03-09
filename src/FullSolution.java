@@ -100,19 +100,19 @@ public class FullSolution {
                             }
                             break;
                         }
-
+                        case 'T': {
+                            TestCase.runCases(vx);
+                            break;
+                        }
 
                     }
                 } catch (Exception e) {
                     System.out.println("Something went wrong on your last instruction - Please try again.");
                 }
             }
-        }
-
-        if (choice.equals("N")) {
-            System.out.println("Test functionality currently not implemented. Your first task is to  invoke the tests.");
-            //VaxProgram vx1 =new VaxProgram();
-            //TestCase.runCases(vx1);
+        } else if (choice.equals("N")) {
+            VaxProgram vx1 = new VaxProgram();
+            TestCase.runCases(vx1);
         }
     }
 
