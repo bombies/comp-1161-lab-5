@@ -58,29 +58,26 @@ public class VaxProgram {
     }
 
     public void loadApproved(String afile) {
-        Scanner apscan = null;
-        /*
-         while (apscan.hasNext())
-            {
+        try (final var apscan = new Scanner(new FileInputStream(afile))) {
+            while (apscan.hasNext()) {
                 String apLine = apscan.nextLine();
-                String [] nextLine = apLine.split(" ");
+                String[] nextLine = apLine.split(" ");
 
                 int id = Integer.parseInt(nextLine[0]);
                 int foundpos = findPerson(plist, id);//.indexOf(id);//***
-                if (foundpos >=0)
-                {
+                if (foundpos >= 0) {
                     ApprovedPerson ap = new ApprovedPerson(plist.get(foundpos).getAge(),
                             plist.get(foundpos).getName(), plist.get(foundpos).getPublish(),
                             plist.get(foundpos).getId());
-                    if (nextLine.length>0)
-                        for (int i=1;i<nextLine.length;i++)
-                            ap.addComorbidity(nextLine[i]);
+                    for (int i = 1; i < nextLine.length; i++)
+                        ap.addComorbidity(nextLine[i]);
                     aplist.add(ap);
                     plist.remove(foundpos);
                 }
             }
-            */
-        this.initApproved = aplist.size();
+        } catch (FileNotFoundException e) {
+            System.out.println("There was no file with the name: " + afile);
+        }
     }
 
     public ArrayList<VaccineBatch> loadVCBatches(String vcfile) throws IOException, ArrayIndexOutOfBoundsException {
