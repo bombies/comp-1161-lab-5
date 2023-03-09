@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class VaxProgram {
     private ArrayList<Person> plist = new ArrayList<Person>();
@@ -144,11 +145,10 @@ public class VaxProgram {
 
 
     public int findPerson(ArrayList<? extends BasePerson> p, int id) {
-        int pos = -1;
-
-
-        return pos;
-
+        return IntStream.range(0, p.size())
+                .filter(i -> id == p.get(i).getId())
+                .findFirst()
+                .orElse(-1);
     }
 
     public int countPersons() {
