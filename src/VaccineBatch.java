@@ -42,14 +42,14 @@ public class VaccineBatch {
     }
 
     public String getContras() {
-        String returnval = "";
+        StringBuilder returnval = new StringBuilder();
         for (int i = 0; i < contras.size(); i++) {
-            returnval += contras.get(i);
+            returnval.append(contras.get(i));
             if (i < contras.size() - 1)
-                returnval += ",";
+                returnval.append(",");
 
         }
-        return returnval;
+        return returnval.toString();
     }
 
     @Override
