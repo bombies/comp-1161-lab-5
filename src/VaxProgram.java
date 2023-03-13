@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -235,16 +236,16 @@ public class VaxProgram {
 
     }
 
-    public void applyVaxes() {
-        //ArrayList<FullyVaccinatedPerson> fvlist = new ArrayList<FullyVaccinatedPerson>();
+    public List<FullyVaccinatedPerson> applyVaxes() {
+        ArrayList<FullyVaccinatedPerson> fvlist = new ArrayList<>();
         if (aplist.size() > 0) {
-            //Collections.sort(aplist);
-            //Collections.sort(vblist);
+            Collections.sort(aplist);
+            Collections.sort(vblist);
             for (VaccineBatch vb : vblist) {
                 int apos = aplist.size() - 1;
                 while ((apos >= 0) && (vb.getBalance() > 0)) {
                     ApprovedPerson ap = aplist.get(apos);
-                    //Person p = (Person)plist.get(findPerson(plist,ap.getId()));
+                    Person p = (Person)plist.get(findPerson(plist,ap.getId()));
                     if (!(vb.contraImpact(ap.getComorbids()))) {
                         vb.reduceBalance();
 
@@ -259,7 +260,9 @@ public class VaxProgram {
 
             }
         }
-        //return fvlist;
+
+        fvlist.sort((a, b) -> a.name.compareToIgnoreCase(b.name));
+        return fvlist;
     }
 
     public void applyRemaining() {

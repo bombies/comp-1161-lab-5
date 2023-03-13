@@ -1,7 +1,7 @@
 
 import java.util.ArrayList;
 
-public class ApprovedPerson extends BasePerson {
+public class ApprovedPerson extends BasePerson implements Comparable<ApprovedPerson> {
     ArrayList<String> comorbidities;
 
     public ApprovedPerson(int age, String name, boolean publish, int id) {
@@ -41,5 +41,10 @@ public class ApprovedPerson extends BasePerson {
     @Override
     public String toString() {
         return String.format("%s\t%s\t\t%s", getId(), getName(), getComorbids().toString());
+    }
+
+    @Override
+    public int compareTo(ApprovedPerson o) {
+        return this.getAge() - o.getAge();
     }
 }

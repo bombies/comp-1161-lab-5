@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 
-public class VaccineBatch {
+public class VaccineBatch implements Comparable<VaccineBatch> {
     private int size;
     private int balance = 0;
     private String name;
@@ -92,4 +92,8 @@ public class VaccineBatch {
     }
 
 
+    @Override
+    public int compareTo(VaccineBatch o) {
+        return this.preference - o.preference;
+    }
 }

@@ -30,5 +30,8 @@ public class FullyVaccinatedPerson extends BasePerson {
 
     }
 
-
+    @Override
+    public String toString() {
+        return String.format("%d%s\t%s\t\t%s", this.getId(), getPublish() ? "*" : "", getName(), getVaxName());
+    }
 }

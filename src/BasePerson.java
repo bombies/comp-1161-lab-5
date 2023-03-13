@@ -32,5 +32,4 @@ public abstract class BasePerson {
     public boolean getPublish() {
         return publish;
     }
-
-} 
+}
