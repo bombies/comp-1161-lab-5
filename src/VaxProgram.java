@@ -59,7 +59,8 @@ public class VaxProgram {
     }
 
     public void loadApproved(String afile) {
-        try (final var apscan = new Scanner(new FileInputStream(afile))) {
+        final var fileName = "src/cases/" + afile.split("cases/")[1];
+        try (final var apscan = new Scanner(new File(fileName))) {
             while (apscan.hasNext()) {
                 String apLine = apscan.nextLine();
                 String[] nextLine = apLine.split(" ");
@@ -77,12 +78,13 @@ public class VaxProgram {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("There was no file with the name: " + afile);
+            System.out.println("There was no file with the name: " + fileName);
         }
     }
 
     public ArrayList<VaccineBatch> loadVCBatches(String vcfile) throws IOException, ArrayIndexOutOfBoundsException {
-        Scanner vscan = new Scanner(new FileInputStream(vcfile));
+        final var fileName = "src/cases/" + vcfile.split("cases/")[1];
+        Scanner vscan = new Scanner(new File(fileName));
         ArrayList<VaccineBatch> vlist = new ArrayList<>();
 
         while (vscan.hasNext()) {

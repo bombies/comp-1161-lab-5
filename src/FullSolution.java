@@ -41,6 +41,8 @@ public class FullSolution {
                     else
                         System.out.println("ID number " + stuId);
                     System.out.println("[P]erson entry\n[A]pproval info\n[V]accine batch\n[S]how data\npro[C]ess vaccinations\n[R]eport\nEnter [I]D\ne[X]it");
+                    if (!scan.hasNext())
+                        break;
                     menu = scan.next().toUpperCase();
                     mchoice = menu.charAt(0);
                     switch (mchoice) {
