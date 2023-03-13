@@ -17,9 +17,7 @@ public class FullyVaccinatedPerson extends BasePerson {
     }
 
     public String publish() {
-        String returnval = "";
-        return returnval;
-
+        return getPublish() ? String.format("<p>%s took the %s vaccine!!!</p>", getName(), vaxname) : "";
     }
 
 
