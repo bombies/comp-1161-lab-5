@@ -2,10 +2,7 @@
 import java.io.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class VaxProgram {
@@ -94,10 +91,9 @@ public class VaxProgram {
                     fileLine[0],
                     Integer.parseInt(fileLine[1]),
                     Integer.parseInt(fileLine[2]),
-                    fileLine[3]
+                    fileLine.length >= 4 ? fileLine[3] : ""
             ));
         }
-
         return vlist;
 
     }
@@ -133,8 +129,7 @@ public class VaxProgram {
         loadApproved(getApprovalInFile(caseNo));
         try {
             vblist = loadVCBatches(getVBatchInFile(caseNo));
-        } catch (IOException ioe) {
-        } catch (ArrayIndexOutOfBoundsException ae) {
+        } catch (IOException | ArrayIndexOutOfBoundsException ioe) {
         }
     }
 
@@ -246,7 +241,13 @@ public class VaxProgram {
                         vb.reduceBalance();
 
                         FullyVaccinatedPerson fv = new FullyVaccinatedPerson(
-                                ap.getAge(), ap.getSimpleName(), ap.getPublish(), ap.getId(), vb.getName());
+                                ap.getAge(),
+                                ap.getSimpleName(),
+                                ap.getPublish(),
+                                ap.getId(),
+                                vb.getName()
+                        );
+
                         fvlist.add(fv);
                         aplist.remove(apos);
 
@@ -277,16 +278,14 @@ public class VaxProgram {
                     pos--;
                 }
             }
-
         }
-
     }
 
     public void publishData() {
         int numPersons = plist.size();
         //int initApproved 
         int approvedRemaining = aplist.size();
-        //ArrayList<VaccineBatch> vblist, ArrayList<FullyVaccinatedPerson> fvlist
+//        ArrayList<VaccineBatch> vblist, ArrayList<FullyVaccinatedPerson> fvlist
         String header = "<html>";
         header += "<head><meta http-equiv='refresh' content='30'></head>";
         header += "<hr>";
@@ -295,24 +294,24 @@ public class VaxProgram {
         header += "<p><font face =Arial size=2>Total Administered:" + fvlist.size() + "</font></p>";
         header += "<p><font face =Arial size=2>Postponed:" + approvedRemaining + "</font></p><hr>";
 
-        String vcdata = "<table border = 0><tr><td>Name</td><td>Size</td><td>Balance</td></tr>";
-        //Collections.sort(vblist);
+        StringBuilder vcdata = new StringBuilder("<table border = 0><tr><td>Name</td><td>Size</td><td>Balance</td></tr>");
+        Collections.sort(vblist);
         for (VaccineBatch vb : vblist)
-            vcdata += "<tr><td>" + vb.getName() + "</td><td>" + vb.getSize() + "</td><td>" + vb.getBalance() + "</td></tr>";
-        vcdata += "</table>";
+            vcdata.append("<tr><td>").append(vb.getName()).append("</td><td>").append(vb.getSize()).append("</td><td>").append(vb.getBalance()).append("</td></tr>");
+        vcdata.append("</table>");
 
-        String personalPublish = "";
+        StringBuilder personalPublish = new StringBuilder();
         String pub;
-        //Collections.sort(fvlist);
+        Collections.sort(fvlist);
         for (FullyVaccinatedPerson fv : fvlist) {
             pub = fv.publish();
             if (pub.length() > 0)
-                personalPublish += fv.publish();
+                personalPublish.append(fv.publish());
         }
         String footer = "<hr></html>";
 
         String pubFile = header + vcdata + personalPublish + footer;
-        PrintWriter outwriter = null;
+        PrintWriter outwriter;
         try {
 
             outwriter = new PrintWriter(new FileOutputStream("publish.html"));
