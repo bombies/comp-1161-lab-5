@@ -1,8 +1,7 @@
-0	Jack Sprat	87	true
-1	Angel River	74	true
-2	Black Beard	59	false
-3	Jill Hill	59	true
+RastaZeneca	1	0	95	Asthma
+AstraZeneca	2	0	90	Allergies
 4	John Silver	72	false
-5	Jerry Tom	32	true
 6	Ginger Garden	27	true
-7	Mary Contrary	52	false
+0	Sprat, Jack		[Asthma,, Diabetes]
+3	Hill, Jill		[Allergies]
+7	Contrary, Mary		[Allergies]

@@ -9,10 +9,10 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class VaxProgram {
-    private ArrayList<Person> plist = new ArrayList<Person>();
-    private ArrayList<ApprovedPerson> aplist = new ArrayList<ApprovedPerson>();
+    private ArrayList<Person> plist = new ArrayList<>();
+    private ArrayList<ApprovedPerson> aplist = new ArrayList<>();
     private ArrayList<VaccineBatch> vblist = new ArrayList<VaccineBatch>();
-    private ArrayList<FullyVaccinatedPerson> fvlist = new ArrayList<FullyVaccinatedPerson>();
+    private ArrayList<FullyVaccinatedPerson> fvlist = new ArrayList<>();
     private int initApproved;
     /*
     vx.loadPersons("persons.txt"); 
@@ -33,7 +33,7 @@ public class VaxProgram {
     }
 
     public ArrayList<Person> loadPersons(String pfile) {
-        Scanner pscan = null;
+        Scanner pscan;
         ArrayList<Person> plist = new ArrayList<Person>();
         try {
             pscan = new Scanner(new File(pfile));
@@ -41,26 +41,21 @@ public class VaxProgram {
                 String[] nextLine = pscan.nextLine().split(" ");
                 String name = nextLine[0] + " " + nextLine[1];
                 int age = Integer.parseInt(nextLine[2]);
-                boolean publish = false;
-                if (nextLine[3].equals("0"))
-                    publish = false;
-                else
-                    publish = true;
+                boolean publish;
+                publish = !nextLine[3].equals("0");
                 Person p = new Person(name, age, publish);
                 plist.add(p);
             }
-
             pscan.close();
         } catch (IOException e) {
         }
 
         return plist;
-
     }
 
     public void loadApproved(String afile) {
-        final var fileName = "src/cases/" + afile.split("cases/")[1];
-        try (final var apscan = new Scanner(new File(fileName))) {
+        try {
+            Scanner apscan = new Scanner(new File(afile));
             while (apscan.hasNext()) {
                 String apLine = apscan.nextLine();
                 String[] nextLine = apLine.split(" ");
@@ -68,32 +63,38 @@ public class VaxProgram {
                 int id = Integer.parseInt(nextLine[0]);
                 int foundpos = findPerson(plist, id);//.indexOf(id);//***
                 if (foundpos >= 0) {
-                    ApprovedPerson ap = new ApprovedPerson(plist.get(foundpos).getAge(),
-                            plist.get(foundpos).getName(), plist.get(foundpos).getPublish(),
-                            plist.get(foundpos).getId());
+                    Person person = plist.get(foundpos);
+                    ApprovedPerson ap = new ApprovedPerson(
+                            person.getAge(),
+                            person.getName(),
+                            person.getPublish(),
+                            person.getId()
+                    );
+
                     for (int i = 1; i < nextLine.length; i++)
                         ap.addComorbidity(nextLine[i]);
                     aplist.add(ap);
                     plist.remove(foundpos);
                 }
             }
+
+            this.initApproved = aplist.size();
         } catch (FileNotFoundException e) {
-            System.out.println("There was no file with the name: " + fileName);
+            System.out.println("There was no file at the path: " + afile);
         }
     }
 
     public ArrayList<VaccineBatch> loadVCBatches(String vcfile) throws IOException, ArrayIndexOutOfBoundsException {
-        final var fileName = "src/cases/" + vcfile.split("cases/")[1];
-        Scanner vscan = new Scanner(new File(fileName));
-        ArrayList<VaccineBatch> vlist = new ArrayList<>();
+        Scanner vscan = new Scanner(new File(vcfile));
+        ArrayList<VaccineBatch> vlist = new ArrayList<VaccineBatch>();
 
         while (vscan.hasNext()) {
-            final var fileLine = vscan.nextLine().split("\\t");
+            final var fileLine = vscan.nextLine().split(" ");
             vlist.add(new VaccineBatch(
                     fileLine[0],
                     Integer.parseInt(fileLine[1]),
-                    Integer.parseInt(fileLine[3]),
-                    fileLine[4]
+                    Integer.parseInt(fileLine[2]),
+                    fileLine[3]
             ));
         }
 
@@ -138,24 +139,24 @@ public class VaxProgram {
     }
 
     public String getPersonInFile(int caseNo) {
-        return "./cases/TestCase" + caseNo + ".persons.txt";
+        return "src/cases/TestCase" + caseNo + ".persons.txt";
 
     }
 
     public String getApprovalInFile(int caseNo) {
-        return "./cases/TestCase" + caseNo + ".approved.txt";
+        return "src/cases/TestCase" + caseNo + ".approved.txt";
 
     }
 
     public String getVBatchInFile(int caseNo) {
-        return "./cases/TestCase" + caseNo + ".batches.txt";
+        return "src/cases/TestCase" + caseNo + ".batches.txt";
 
     }
 
 
     public int findPerson(ArrayList<? extends BasePerson> p, int id) {
         return IntStream.range(0, p.size())
-                .filter(i -> id == p.get(i).getId())
+                .filter(i -> p.get(i).getId() == id)
                 .findFirst()
                 .orElse(-1);
     }
@@ -189,7 +190,7 @@ public class VaxProgram {
     }
 
     public void printAllApproved(PrintStream outStream, boolean header) {
-        //Collections.sort(aplist);
+        Collections.sort(aplist);
         if (header)
             outStream.println(ApprovedPerson.getAPHeader());
         for (ApprovedPerson ap : aplist)
@@ -197,7 +198,7 @@ public class VaxProgram {
     }
 
     public void printAllVaxed(PrintStream outStream, boolean header) {
-        //Collections.sort(fvlist);
+        Collections.sort(fvlist);
         if (header)
             outStream.println(FullyVaccinatedPerson.getFVHeader());
         for (FullyVaccinatedPerson fv : fvlist)
@@ -206,7 +207,7 @@ public class VaxProgram {
 
     public void reportAllVaxed(PrintStream outStream) {
         String pub;
-        //Collections.sort(fvlist);
+        Collections.sort(fvlist);
         for (FullyVaccinatedPerson fv : fvlist) {
             pub = fv.publish();
             if (pub.length() > 0)
@@ -247,7 +248,7 @@ public class VaxProgram {
                 int apos = aplist.size() - 1;
                 while ((apos >= 0) && (vb.getBalance() > 0)) {
                     ApprovedPerson ap = aplist.get(apos);
-                    Person p = (Person)plist.get(findPerson(plist,ap.getId()));
+//                    Person p = (Person) plist.get(findPerson(plist, ap.getId()));
                     if (!(vb.contraImpact(ap.getComorbids()))) {
                         vb.reduceBalance();
 
@@ -262,26 +263,26 @@ public class VaxProgram {
 
             }
         }
-
-        fvlist.sort((a, b) -> a.name.compareToIgnoreCase(b.name));
         return fvlist;
     }
 
     public void applyRemaining() {
-        //Collections.sort(vblist);
+        Collections.sort(vblist);
         Collections.sort(plist);
         for (VaccineBatch vb : vblist) {
             int pos = plist.size() - 1;
             while ((pos >= 0) && (vb.getBalance() > 0)) {
-                Person p = (Person) plist.get(pos);
-                //if (findPerson(fvlist, p.getId())>=0 )//pos id not in fully vaccinated
-                FullyVaccinatedPerson fv = new FullyVaccinatedPerson(
-                        p.getAge(), p.getName(), p.getPublish(), p.getId(), vb.getName());
-                fvlist.add(fv);
-                vb.reduceBalance();
-                plist.remove(pos);
+                Person p = plist.get(pos);
+                if (findPerson(fvlist, p.getId()) == -1) { //pos id not in fully vaccinated
+                    FullyVaccinatedPerson fv = new FullyVaccinatedPerson(
+                            p.getAge(), p.getName(), p.getPublish(), p.getId(), vb.getName()
+                    );
+                    fvlist.add(fv);
+                    vb.reduceBalance();
+                    plist.remove(pos);
 
-                pos--;
+                    pos--;
+                }
             }
 
         }

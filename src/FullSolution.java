@@ -40,9 +40,11 @@ public class FullSolution {
                         System.out.println("ID not yet set.");
                     else
                         System.out.println("ID number " + stuId);
-                    System.out.println("[P]erson entry\n[A]pproval info\n[V]accine batch\n[S]how data\npro[C]ess vaccinations\n[R]eport\nEnter [I]D\ne[X]it");
-                    if (!scan.hasNext())
+                    System.out.println("[P]erson entry\n[A]pproval info\n[V]accine batch\n[S]how data\npro[C]ess vaccinations\n[R]eport\nEnter [I]D\ne[X]it\nRun [T]est Cases");
+
+                    if (scan.hasNext())
                         break;
+
                     menu = scan.next().toUpperCase();
                     mchoice = menu.charAt(0);
                     switch (mchoice) {
@@ -109,10 +111,13 @@ public class FullSolution {
 
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.out.println("Something went wrong on your last instruction - Please try again.");
                 }
             }
-        } else if (choice.equals("N")) {
+        }
+
+        if (choice.equals("N")) {
             VaxProgram vx1 = new VaxProgram();
             TestCase.runCases(vx1);
         }

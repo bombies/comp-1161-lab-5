@@ -42,19 +42,14 @@ public class VaccineBatch implements Comparable<VaccineBatch> {
     }
 
     public String getContras() {
-        StringBuilder returnval = new StringBuilder();
+        String returnval = "";
         for (int i = 0; i < contras.size(); i++) {
-            returnval.append(contras.get(i));
+            returnval += contras.get(i);
             if (i < contras.size() - 1)
-                returnval.append(",");
+                returnval += ",";
 
         }
-        return returnval.toString();
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s\t%d\t%d\t%d\t%s", getName(), getSize(), getBalance(), getPreference(), getContras());
+        return returnval;
     }
 
     public static String getVBHeader() {
@@ -81,19 +76,17 @@ public class VaccineBatch implements Comparable<VaccineBatch> {
         return found;
     }
 
-    //public int compareTo(VaccineBatch other)
-    //{
-    //    return other.preference-this.preference ;  
-    //}
+    @Override
+    public int compareTo(VaccineBatch other) {
+        return other.preference - this.preference;
+    }
 
     public void reduceBalance() {
-
         balance--;
     }
 
-
     @Override
-    public int compareTo(VaccineBatch o) {
-        return this.preference - o.preference;
+    public String toString() {
+        return String.format("%s\t%d\t%d\t%d\t%s", getName(), getSize(), getBalance(), getPreference(), getContras());
     }
 }

@@ -25,28 +25,28 @@ public class TestCase {
     }
 
     public String getPersonInFile() {
-        return "./cases/TestCase" + caseNo + ".persons.txt";
+        return "src/cases/TestCase" + caseNo + ".persons.txt";
 
     }
 
     public String getApprovalInFile() {
-        return "./cases/TestCase" + caseNo + ".approved.txt";
+        return "src/cases/TestCase" + caseNo + ".approved.txt";
 
     }
 
     public String getVBatchInFile() {
-        return "./cases/TestCase" + caseNo + ".batches.txt";
+        return "src/cases/TestCase" + caseNo + ".batches.txt";
 
     }
 
     public String getTestOutFile() {
-        return "./cases/TestCase" + caseNo + ".myOutput.txt";
+        return "src/cases/TestCase" + caseNo + ".myOutput.txt";
 
     }
 
     public double score() {
-        String testfile = "./cases/TestCase" + caseNo + ".myOutput.txt";
-        String valfile = "./cases/TestCase" + caseNo + ".valOutput.txt";
+        String testfile = "src/cases/TestCase" + caseNo + ".myOutput.txt";
+        String valfile = "src/cases/TestCase" + caseNo + ".valOutput.txt";
         String tString = "", vString = "";
         try {
             Scanner tscan = new Scanner(new File(testfile));

@@ -7,7 +7,7 @@ public class ApprovedPerson extends BasePerson implements Comparable<ApprovedPer
     public ApprovedPerson(int age, String name, boolean publish, int id) {
         super(name, age, publish);
         super.setId(id);
-        comorbidities = new ArrayList<>();
+        comorbidities = new ArrayList<String>();
 
     }
 
@@ -20,10 +20,9 @@ public class ApprovedPerson extends BasePerson implements Comparable<ApprovedPer
     }
 
 
-    @Override
     public String getName() {
-        final var nameSplit = this.name.split(" ");
-        return String.format("%s,%s", nameSplit[1], nameSplit[2]);
+        final var nameSplit = name.split(" ");
+        return String.format("%s, %s", nameSplit[1], nameSplit[0]);
     }
 
     public String getSimpleName() {
@@ -35,16 +34,15 @@ public class ApprovedPerson extends BasePerson implements Comparable<ApprovedPer
         String returnval = "ID\tName\t\tComorbidities";
         returnval += "\n---------------------------------";
         return returnval;
-
     }
 
     @Override
     public String toString() {
-        return String.format("%s\t%s\t\t%s", getId(), getName(), getComorbids().toString());
+        return String.format("%d\t%s\t\t%s", getId(), getName(), getComorbids());
     }
 
     @Override
     public int compareTo(ApprovedPerson o) {
-        return this.getAge() - o.getAge();
+        return o.getAge() - this.getAge();
     }
 }

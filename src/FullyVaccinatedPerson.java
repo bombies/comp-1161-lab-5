@@ -1,5 +1,5 @@
 
-public class FullyVaccinatedPerson extends BasePerson {
+public class FullyVaccinatedPerson extends BasePerson implements Comparable<FullyVaccinatedPerson> {
     private String vaxname;
 
     public FullyVaccinatedPerson(int age, String name, boolean publish, int id, String vaxname) {
@@ -17,19 +17,23 @@ public class FullyVaccinatedPerson extends BasePerson {
     }
 
     public String publish() {
-        return getPublish() ? String.format("<p>%s took the %s vaccine!!!</p>", getName(), vaxname) : "";
+        return getPublish() ? String.format("<p>%s took the %s vaccine!!!</p>", getName(), vaxname) : null;
     }
-
 
     public static String getFVHeader() {
         String returnval = "ID\tName\t\tVaccine";
         returnval += "\n---------------------------------";
         return returnval;
-
     }
+
 
     @Override
     public String toString() {
-        return String.format("%d%s\t%s\t\t%s", this.getId(), getPublish() ? "*" : "", getName(), getVaxName());
+        return String.format("%d%s\t%s\t\t%s", getId(), getPublish() ? "*" : "", getName(), getVaxName());
+    }
+
+    @Override
+    public int compareTo(FullyVaccinatedPerson o) {
+        return o.getName().compareTo(this.getName());
     }
 }
