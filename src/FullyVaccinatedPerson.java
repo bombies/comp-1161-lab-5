@@ -13,11 +13,12 @@ public class FullyVaccinatedPerson extends BasePerson implements Comparable<Full
     }
 
     public String getName() {
-        return name;
+        final var nameSplit = name.split(" ");
+        return String.format("%s, %s", nameSplit[1], nameSplit[0]);
     }
 
     public String publish() {
-        return getPublish() ? String.format("<p>%s took the %s vaccine!!!</p>", getName(), vaxname) : null;
+        return getPublish() ? String.format("<p>%s took the %s vaccine!!!</p>", getName(), vaxname) : "";
     }
 
     public static String getFVHeader() {
@@ -34,6 +35,6 @@ public class FullyVaccinatedPerson extends BasePerson implements Comparable<Full
 
     @Override
     public int compareTo(FullyVaccinatedPerson o) {
-        return o.getName().compareTo(this.getName());
+        return this.getName().compareTo(o.getName());
     }
 }

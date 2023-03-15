@@ -228,19 +228,12 @@ public class VaxProgram {
     }
 
     public int countVaxes() {
-        int sum = 0;
-        int i = 0;
-        //ArrayList<VaccineBatch> vlist
-        boolean found = false;
-        for (VaccineBatch vb : vblist)
-            sum += vb.getBalance();
-
-        return sum;
-
+        return vblist.stream()
+                .map(VaccineBatch::getBalance)
+                .reduce(0, Integer::sum);
     }
 
-    public List<FullyVaccinatedPerson> applyVaxes() {
-        ArrayList<FullyVaccinatedPerson> fvlist = new ArrayList<>();
+    public void applyVaxes() {
         if (aplist.size() > 0) {
             Collections.sort(aplist);
             Collections.sort(vblist);
@@ -263,7 +256,6 @@ public class VaxProgram {
 
             }
         }
-        return fvlist;
     }
 
     public void applyRemaining() {
@@ -273,7 +265,8 @@ public class VaxProgram {
             int pos = plist.size() - 1;
             while ((pos >= 0) && (vb.getBalance() > 0)) {
                 Person p = plist.get(pos);
-                if (findPerson(fvlist, p.getId()) == -1) { //pos id not in fully vaccinated
+                if (findPerson(fvlist, p.getId()) == -1) {
+
                     FullyVaccinatedPerson fv = new FullyVaccinatedPerson(
                             p.getAge(), p.getName(), p.getPublish(), p.getId(), vb.getName()
                     );

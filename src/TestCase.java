@@ -1,11 +1,9 @@
-
-import java.util.Scanner;
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TestCase {
     // instance variables - replace the example below with your own
@@ -47,22 +45,22 @@ public class TestCase {
     public double score() {
         String testfile = "src/cases/TestCase" + caseNo + ".myOutput.txt";
         String valfile = "src/cases/TestCase" + caseNo + ".valOutput.txt";
-        String tString = "", vString = "";
+        StringBuilder tString = new StringBuilder();
+        StringBuilder vString = new StringBuilder();
         try {
             Scanner tscan = new Scanner(new File(testfile));
             while (tscan.hasNext())
-                tString += tscan.nextLine();
+                tString.append(tscan.nextLine());
         } catch (IOException ioe) {
         }
         try {
             Scanner vscan = new Scanner(new File(valfile));
             while (vscan.hasNext())
-                vString += vscan.nextLine();
+                vString.append(vscan.nextLine());
         } catch (IOException ioe) {
         }
 
-        double sc = caseScores[getCaseNo()] * similarity(tString, vString);
-        return sc;
+        return caseScores[getCaseNo()] * similarity(tString.toString(), vString.toString());
 
     }
 

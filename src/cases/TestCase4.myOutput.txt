@@ -5,3 +5,6 @@ AstraZeneca	2	0	90	Allergies
 0	Sprat, Jack		[Asthma,, Diabetes]
 3	Hill, Jill		[Allergies]
 7	Contrary, Mary		[Allergies]
+2	Beard, Black		AstraZeneca
+1*	River, Angel		AstraZeneca
+5*	Tom, Jerry		RastaZeneca
